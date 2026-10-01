@@ -404,7 +404,7 @@ function renderHome() {
   ${paused ? `<div class="card pausebox"><div style="font-size:34px">⏸️</div><h2>Venta pausada</h2><p class="muted" style="margin:0">${esc(s.pauseMsg)}</p></div>` : ""}
   <div class="card">
     <div class="row between">
-      <h2 style="margin:0">🎟️ Elige tus númeross (00 – 99)</h2>
+      <h2 style="margin:0">🎟️ Elige tus números (00 – 99)</h2>
       ${closed ? "" : `<button class="btn purple" id="rnd">🔀 Al azar</button>`}
     </div>
     <div class="legend">
@@ -547,12 +547,11 @@ async function submitOrder() {
 function renderVerify() {
   $("#app").innerHTML = `<div class="card narrow">
     <div class="center"><div style="font-size:36px">🔍</div><h2>Verificador de Números</h2><p class="muted">Escribe el número de WhatsApp que usaste al comprar</p></div>
-    <div class="row" style="flex-wrap:nowrap;margin-bottom:16px"><input id="vq" placeholder="809-555-5555" inputmode="numeric" maxlength="12"><button class="btn purple" id="vgo">Buscar</button></div>
+    <div class="row" style="flex-wrap:nowrap;margin-bottom:16px"><input id="vq" type="tel" placeholder="Ej: 809-555-5555" autocomplete="tel"><button class="btn purple" id="vgo">Buscar</button></div>
     <div id="vres"></div></div>`;
-  phoneField($("#vq"));
   const go = async () => {
-    const p = normPhone($("#vq").value);
-    if (!validPhone(p)) return ($("#vres").innerHTML = `<p class="center muted">Escribe tu número de 10 dígitos (809, 829 u 849).</p>`);
+    const p = normPhone($("#vq").value).slice(-10);
+    if (p.length < 10) { $("#vres").innerHTML = ""; $("#vq").focus(); return; }
     $("#vres").innerHTML = `<p class="center muted">Buscando...</p>`;
     try {
       const qs = await getDocs(collection(db, "lookup", p, "items"));
@@ -566,7 +565,8 @@ function renderVerify() {
         ${o.status === "rechazado" ? `<div class="small" style="color:#fca5a5;margin-top:6px">Este pago no fue validado o la reserva fue liberada. Escríbenos por WhatsApp.</div>` : ""}</div>`).join("");
     } catch (e) { console.error(e); $("#vres").innerHTML = `<p class="center" style="color:var(--r)">Error al buscar. Intenta de nuevo.</p>`; }
   };
-  $("#vgo").onclick = go; $("#vq").onkeydown = (e) => e.key === "Enter" && go();
+  $("#vgo").onclick = go;
+  $("#vq").addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
 }
 
 /* ================= ADMIN ================= */
