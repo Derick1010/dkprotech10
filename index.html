@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DK Protech | Rifas</title>
+<meta name="theme-color" content="#070812">
+<style>
+:root{--bg:#070812;--card:#0e1122;--card2:#151a30;--bd:#262c4d;--g:#22c55e;--g2:#4ade80;--p:#6366f1;--b:#3b82f6;--t:#e5e7eb;--m:#94a3b8;--a:#f59e0b;--r:#ef4444}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#141a3a 0%,var(--bg) 55%) fixed;background-color:var(--bg);color:var(--t);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0}
+input,select,textarea{font:inherit;width:100%;background:var(--card2);border:1px solid var(--bd);color:var(--t);border-radius:10px;padding:11px 12px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--p)}
+input.good{border-color:var(--g)}input.bad{border-color:var(--r)}
+label{display:block;font-size:14px;margin-bottom:12px}
+label > input,label > select,label > textarea{margin-top:5px}
+.hint{font-size:12px;color:var(--m);margin-top:5px;display:block}
+header{position:sticky;top:0;z-index:30;background:rgba(7,8,18,.92);border-bottom:1px solid var(--bd);backdrop-filter:blur(8px)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 14px}
+.hbar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:8px}
+.brand img{height:40px}
+.brand span{font-family:Georgia,serif;font-weight:700;letter-spacing:3px;color:#fff;font-size:18px;text-shadow:0 0 10px var(--p),0 0 20px var(--b)}
+nav{display:flex;gap:4px}
+nav a{padding:8px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--m);white-space:nowrap}
+nav a.act{background:#6366f133;color:#c7d2fe}
+main{padding:20px 0 120px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:22px;margin-bottom:18px}
+.muted{color:var(--m)}.small{font-size:12px}.center{text-align:center}.cap{text-transform:capitalize}
+h1{font-size:30px;margin:8px 0;color:#fff}h2{color:#fff;margin:0 0 10px}h3{color:#fff}
+.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:26px;align-items:start}
+.prize{border-radius:14px;height:460px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#6366f133,var(--card2));overflow:hidden}
+.prize img{max-width:100%;max-height:100%;object-fit:contain}
+.garr{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;width:42px;height:42px;border-radius:50%;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;z-index:2}
+.garr.gl{left:10px}.garr.gr{right:10px}
+.gcount{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.65);font-size:12px;padding:3px 9px;border-radius:99px;color:#fff}
+.thumbs{display:flex;gap:6px;overflow-x:auto;margin-top:8px;padding-bottom:4px}
+.thumbs img{width:64px;height:64px;flex-shrink:0;object-fit:cover;border-radius:8px;border:2px solid transparent;cursor:pointer;opacity:.55;transition:.2s}
+.thumbs img.on{border-color:var(--g);opacity:1}
+#galImg{transition:opacity .25s}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;padding:5px 12px;border-radius:99px}
+.pill i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.pill.on{background:#22c55e22;color:var(--g2)}.pill.off{background:#ef444422;color:var(--r)}
+.price{font-size:30px;font-weight:900;color:var(--g2);margin:10px 0}.price small{font-size:14px;font-weight:400;color:var(--m)}
+.info{list-style:none;padding:0;margin:0 0 14px;font-size:14px;line-height:1.9}
+.cdtitle{font-size:17px;font-weight:700;margin-bottom:8px;color:#fff}.cdtitle b{color:var(--g2);font-size:26px}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cd div{background:var(--card2);border:1px solid var(--bd);border-radius:12px;padding:8px;text-align:center}
+.cd b{display:block;font-size:24px;color:var(--g2)}.cd span{font-size:11px;color:var(--m)}
+.prog{margin-top:20px}.prog .bar{height:12px;background:var(--card2);border-radius:99px;overflow:hidden}
+.prog .fill{height:100%;background:linear-gradient(90deg,var(--g),var(--b),var(--p));border-radius:99px;transition:width .5s}
+.pausebox{border-color:var(--r);text-align:center;background:#ef44440f}
+.note{font-size:16px;line-height:1.65;color:var(--t);background:#3b82f614;border:1px solid #3b82f655;border-radius:14px;padding:16px 18px;margin-top:18px}
+.note b{color:#fff}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.between{justify-content:space-between}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--m);margin:10px 0 16px}
+.legend span{display:flex;align-items:center;gap:5px}.legend i{width:15px;height:15px;border-radius:4px;display:inline-block}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}
+.num{aspect-ratio:1/1;border-radius:10px;background:var(--card2);border:1px solid var(--bd);color:var(--t);font-weight:800;font-size:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.15s;padding:0}
+.num small{font-size:8px;letter-spacing:.5px;font-weight:700}
+.num:not(:disabled):hover{border-color:var(--g)}
+.num.sel{background:var(--g);color:#04130a;border-color:var(--g2);box-shadow:0 0 14px #22c55e88;transform:scale(1.05)}
+.num.res{background:#2a2110;color:var(--a);border-color:#f59e0b66}
+.num.sold{background:#15151c;color:#4b5563;border-color:#2a2a33}.num.sold b{text-decoration:line-through}
+.num.winn{background:var(--g);color:#000;border:2px solid #fff}
+.num:disabled{cursor:not-allowed}
+.btn{padding:10px 16px;border-radius:10px;font-weight:700;font-size:14px;background:var(--card2);color:var(--t);display:inline-flex;align-items:center;gap:6px;justify-content:center}
+.btn.green{background:linear-gradient(90deg,var(--g),var(--g2));color:#04130a;font-weight:900}
+.btn.purple{background:var(--p);color:#fff}.btn.blue{background:#3b82f633;color:#93c5fd}
+.btn.red{background:#ef444433;color:#fca5a5}.btn.redf{background:var(--r);color:#fff}.btn.wa{background:#25d36633;color:#86efac}
+.btn.yellow{background:#facc15;color:#000}.btn.full{width:100%;padding:15px;font-size:17px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(7,8,18,.96);border-top:1px solid var(--bd);padding:12px;display:none}
+#bar .wrap{display:flex;align-items:center;gap:10px}
+#bar .info2{flex:1;min-width:0}#bar .nums{font-size:12px;color:var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#bar .tot{font-size:21px;font-weight:900;color:var(--g2)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:50;display:flex;align-items:center;justify-content:center;padding:14px}
+.md{background:var(--card);border:1px solid var(--bd);border-radius:18px;width:100%;max-width:540px;max-height:92vh;overflow-y:auto}
+.md.wide{max-width:860px}
+.mh{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--bd);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;z-index:2}
+.mh .x{background:none;color:var(--m);font-size:22px}
+.mb{padding:18px}
+.box{background:var(--card2);border-radius:12px;padding:14px;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 10px;border-radius:8px;font-weight:900;background:var(--card);color:var(--g2);border:1px solid var(--bd)}
+.chip.g{background:var(--g);color:#000}.chip.a{background:#f59e0b22;color:var(--a);border-color:var(--a)}
+.accs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.acc{background:var(--card2);border:1px solid var(--bd);border-radius:12px;padding:12px 6px;font-size:12px;font-weight:700;color:var(--t)}
+.acc img{width:40px;height:40px;object-fit:contain;border-radius:9px;display:block;margin:0 auto 6px;background:#fff;padding:3px}
+.acc.on{background:#6366f133;border-color:var(--p)}
+.accbox{margin-top:12px;background:#3b82f614;border:1px solid #3b82f666;border-radius:12px;padding:14px}
+.accbox .bl{width:42px;height:42px;object-fit:contain;border-radius:9px;background:#fff;padding:3px}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:18px;font-weight:800;color:#fff}
+.drop{display:block;border:2px dashed var(--bd);border-radius:12px;padding:20px;text-align:center;cursor:pointer;background:var(--card2)}
+.drop.ok{border-color:var(--g)}.drop img{max-height:170px;border-radius:8px;display:block;margin:0 auto 8px}
+.err{background:#ef444422;color:#fca5a5;border-radius:10px;padding:10px;font-size:14px;margin-bottom:12px}
+.okmsg{background:#22c55e22;color:var(--g2);border-radius:10px;padding:10px;font-size:14px;margin-bottom:12px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--m)}.chk input{width:auto;margin-top:2px}
+.badge{font-size:11px;font-weight:800;padding:4px 9px;border-radius:99px}
+.b-pendiente{color:var(--a);background:#f59e0b22}.b-aprobado{color:var(--g2);background:#22c55e22}.b-rechazado{color:var(--r);background:#ef444422}
+.win{text-align:center;border-color:var(--g);box-shadow:0 0 30px #22c55e33}
+.bignum{font-size:64px;font-weight:900;color:var(--g2);text-shadow:0 0 20px var(--g)}
+.narrow{max-width:460px;margin:0 auto}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stats .card{padding:14px;text-align:center;margin:0}.stats b{display:block;font-size:20px}
+.adpause{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px}
+.tabs button{padding:9px 16px;border-radius:10px;background:var(--card2);color:var(--m);font-weight:700;white-space:nowrap}
+.tabs button.on{background:var(--p);color:#fff}
+.oc{background:var(--card2);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:10px}
+.board{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.bc{border-radius:8px;padding:6px 2px;text-align:center;font-size:10px;background:var(--card2);border:1px solid var(--bd);min-height:56px;color:var(--m)}
+.bc b{display:block;font-size:16px;color:var(--t)}
+.bc.free{cursor:pointer}.bc.free:hover{border-color:var(--g)}
+.bc.pick{background:var(--g);border-color:var(--g2);color:#000}.bc.pick b{color:#000}
+.bc.v{background:#22c55e1a;border-color:#22c55e66;cursor:pointer}.bc.v b{color:var(--g2)}
+.bc.r{background:#f59e0b1a;border-color:#f59e0b66;cursor:pointer}.bc.r b{color:var(--a)}
+.bc .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--t)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.span2{grid-column:span 2}
+.accrow{display:grid;grid-template-columns:auto repeat(4,1fr) auto;gap:8px;align-items:center;background:var(--card2);padding:10px;border-radius:12px;margin-bottom:8px}
+.lg{position:relative;width:52px;height:52px;border-radius:10px;border:1px dashed var(--bd);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-size:9px;color:var(--m);margin:0;overflow:visible}
+.lg img{width:100%;height:100%;object-fit:contain;border-radius:9px;background:#fff;padding:3px}
+.lg .lgx{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:var(--r);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}
+.galadm{display:grid;grid-template-columns:repeat(auto-fill,minmax(95px,1fr));gap:8px}
+.galadm div{position:relative}.galadm img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;display:block}
+.galadm button{position:absolute;top:4px;right:4px;background:var(--r);color:#fff;width:26px;height:26px;border-radius:50%;font-size:13px}
+.pw{position:relative;margin-top:5px}.pw input{padding-right:48px}
+.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;font-size:18px;padding:6px}
+#toast{position:fixed;top:78px;left:50%;transform:translateX(-50%);z-index:60;padding:12px 18px;border-radius:12px;font-weight:700;font-size:14px;display:none;color:#000;max-width:92vw;text-align:center}
+footer{border-top:1px solid var(--bd);padding:30px 0;text-align:center;font-size:12px;color:var(--m)}
+footer .brand{justify-content:center;margin-bottom:10px}
+@media(max-width:860px){
+ .hero{grid-template-columns:1fr}.prize{height:340px}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .f2{grid-template-columns:1fr}.span2{grid-column:span 1}
+ .accrow{grid-template-columns:auto 1fr 1fr}
+ h1{font-size:24px}
+}
+@media(max-width:600px){
+ .grid{grid-template-columns:repeat(5,1fr)}.board{grid-template-columns:repeat(5,1fr)}
+ .accs{grid-template-columns:repeat(2,1fr)}
+ .card{padding:16px}.ov{padding:0;align-items:flex-end}.md{border-radius:18px 18px 0 0}
+ .brand span{font-size:14px;letter-spacing:2px}
+ nav a{padding:6px 7px;font-size:12px}
+ .prize{height:300px}
+ .note{font-size:15px}
+}
+@media(max-width:430px){
+ .brand span{display:none}
+ .hbar{gap:8px}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap hbar">
+  <a href="#/" class="brand" id="brand"></a>
+  <nav><a href="#/" id="n-home">🏠 Inicio</a><a href="#/verificar" id="n-ver">🔍 Verificador de Números</a></nav>
+</div></header>
+
+<main class="wrap" id="app"><div class="center muted" style="padding:80px 0">Cargando rifa...</div></main>
+
+<div id="bar"><div class="wrap">
+  <div class="info2"><div class="nums" id="barNums"></div><div class="tot" id="barTot"></div></div>
+  <button class="btn" id="barClear">✕</button>
+  <button class="btn green" id="barGo">CONTINUAR</button>
+</div></div>
+
+<footer><div class="wrap">
+  <div class="brand" id="brand2"></div>
+  <div id="fwa"></div>
+  <p>Solo para mayores de 18 años. © <span id="yr"></span> DK Protech.</p>
+  <a href="#/admin" style="opacity:.4">🔒 Panel</a>
+</div></footer>
+
+<div id="modal"></div>
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, collection, onSnapshot, runTransaction, setDoc, getDoc, getDocs, writeBatch, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/* ================= CONFIGURACIÓN ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyC79MwvsE9yOG5sYjdGYndm73PqqI9jSfA",
+  authDomain: "dkprotech.firebaseapp.com",
+  projectId: "dkprotech",
+  storageBucket: "dkprotech.firebasestorage.app",
+  messagingSenderId: "1092801700019",
+  appId: "1:1092801700019:web:186252155730900f5710c6",
+  measurementId: "G-3G5M7J3RGD"
+};
+const ADMIN_USER = "DerickG";                 // usuario del panel
+const ADMIN_DOMAIN = "dkprotech.app";         // no cambiar
+const ADMIN_EMAIL = (ADMIN_USER + "@" + ADMIN_DOMAIN).toLowerCase();
+const OWNER_WA = "18098298455";               // WhatsApp donde recibes las compras
+const PHONE_CODES = ["809", "829", "849"];    // códigos válidos de teléfono (RD)
+/* ================================================= */
+
+const DEF = {
+  title: "iPhone 16 Pro Max 256GB", description: "Equipo revisado y con sello de garantía DK Protech.",
+  price: 300, minNumbers: 1, maxNumbers: 5, drawDate: "", drawTime: "14:30", lottery: "Lotería Nacional (Gana Más)",
+  unsoldRule: "Si el número ganador no fue vendido, se toma el 2do premio del mismo sorteo.",
+  pauseMsg: "La venta está pausada en este momento. Mantente pendiente de nuestras redes.",
+  accounts: [{ bank: "Banco Popular", type: "Ahorro", number: "000000000", holder: "Tu Nombre", logo: "" }],
+  whatsapp: OWNER_WA, winningNumber: "", winnerName: "", open: true, showCountdown: true, logo: "", prizeImg: ""
+};
+const NUMS = Array.from({ length: 100 }, (_, i) => String(i).padStart(2, "0"));
+const S = { settings: { ...DEF }, numbers: {}, orders: [], gallery: [], sel: [], msel: [], gi: 0, user: null, tab: "pedidos", filter: "pendiente", q: "", draftAcc: null, ready: false, unsubOrders: null };
+
+/* ---------- utilidades ---------- */
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const digits = (s) => String(s || "").replace(/\D/g, "");
+const normPhone = (v) => { let d = digits(v); if (d.length === 11 && d[0] === "1") d = d.slice(1); return d; };
+const validPhone = (v) => { const d = normPhone(v); return d.length === 10 && PHONE_CODES.includes(d.slice(0, 3)); };
+const fmtPhone = (d) => d.length > 6 ? `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6, 10)}` : d.length > 3 ? `${d.slice(0, 3)}-${d.slice(3)}` : d;
+const money = (n) => "RD$ " + Number(n || 0).toLocaleString("es-DO", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtDate = (d) => d ? new Date(d + "T12:00").toLocaleDateString("es-DO", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : "Por anunciar";
+const fmtTime = (t) => { if (!t) return ""; const [h, m] = t.split(":").map(Number); return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h >= 12 ? "PM" : "AM"}`; };
+const fmtDT = (ts) => { const d = ts?.toDate ? ts.toDate() : null; return d ? d.toLocaleString("es-DO", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "ahora"; };
+const route = () => (location.hash.replace("#/", "") || "home").split("?")[0];
+const isAdmin = () => !!S.user && S.user.email?.toLowerCase() === ADMIN_EMAIL;
+const maxN = () => Math.max(1, Number(S.settings.maxNumbers) || 5);
+
+/* formatea y valida un campo de teléfono mientras se escribe */
+function phoneField(input) {
+  input.type = "tel";
+  input.setAttribute("maxlength", "16");
+  const check = () => {
+    const d = normPhone(input.value);
+    input.classList.toggle("good", validPhone(d));
+    input.classList.toggle("bad", d.length >= 10 && !validPhone(d));
+  };
+  input.addEventListener("input", () => {
+    if (/[^0-9\-\s()+]/.test(input.value)) input.value = input.value.replace(/[^0-9\-\s()+]/g, "");
+    check();
+  });
+  input.addEventListener("blur", () => { const d = normPhone(input.value); if (d) input.value = fmtPhone(d.slice(0, 10)); check(); });
+}
+
+function toast(msg, err) { const t = $("#toast"); t.textContent = msg; t.style.background = err ? "var(--r)" : "var(--g)"; t.style.display = "block"; clearTimeout(t._t); t._t = setTimeout(() => (t.style.display = "none"), 3400); }
+function openModal(html, wide) { $("#modal").innerHTML = `<div class="ov"><div class="md ${wide ? "wide" : ""}">${html}</div></div>`; $("#modal .ov").addEventListener("click", (e) => { if (e.target.classList.contains("ov")) closeModal(); }); $$("#modal [data-close]").forEach((b) => (b.onclick = closeModal)); }
+function closeModal() { $("#modal").innerHTML = ""; }
+function ask(msg, danger = true) { return new Promise((res) => { openModal(`<div class="mb center"><div style="font-size:40px">⚠️</div><p>${esc(msg)}</p><div class="row"><button class="btn" style="flex:1" id="cn">Cancelar</button><button class="btn ${danger ? "redf" : "green"}" style="flex:1" id="cy">Confirmar</button></div></div>`); $("#cn").onclick = () => { closeModal(); res(false); }; $("#cy").onclick = () => { closeModal(); res(true); }; }); }
+async function copy(t) { try { await navigator.clipboard.writeText(t); } catch { const a = document.createElement("textarea"); a.value = t; document.body.appendChild(a); a.select(); document.execCommand("copy"); a.remove(); } toast("Copiado ✔"); }
+function compress(file, max = 1000, q = 0.65, type = "image/jpeg") { return new Promise((res, rej) => { const r = new FileReader(); r.onload = (e) => { const img = new Image(); img.onload = () => { const s = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement("canvas"); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); res(c.toDataURL(type, q)); }; img.onerror = rej; img.src = e.target.result; }; r.onerror = rej; r.readAsDataURL(file); }); }
+function waLink(phone, msg) { const p = digits(phone); return `https://wa.me/${p.length === 10 ? "1" + p : p}?text=${encodeURIComponent(msg)}`; }
+async function runOps(ops) { for (let i = 0; i < ops.length; i += 400) { const b = writeBatch(db); ops.slice(i, i + 400).forEach((f) => f(b)); await b.commit(); } }
+
+function ownerMsg(o) {
+  const base = location.href.split("#")[0];
+  return ["🎟️ *NUEVA COMPRA – DK PROTECH*", "━━━━━━━━━━━━━━", `🏆 *Rifa:* ${S.settings.title}`, `👤 *Nombre:* ${o.name}`, `📱 *WhatsApp:* ${fmtPhone(o.phone)}`, `🔢 *Números:* ${o.numbers.join(", ")}`, `🧮 *Cantidad:* ${o.numbers.length}`, `💰 *Total:* ${money(o.total)}`, `🏦 *Pagó a:* ${o.account}`, `🆔 *Código:* ${o.id}`, "━━━━━━━━━━━━━━", `📎 *Ver comprobante:* ${base}#/admin?v=${o.id}`, "", "_Adjunto la foto del comprobante_ 👇"].join("\n");
+}
+
+function logoSVG(size = 40, id = "a") {
+  let dots = ""; for (let i = 0; i < 14; i++) { const a = -0.2 + i * 0.13; dots += `<circle cx="${56 + Math.cos(a) * 30}" cy="${66 + Math.sin(a) * 30}" r="${2.4 - i * 0.12}" fill="#fff" opacity="${1 - i * 0.05}"/>`; }
+  return `<svg viewBox="0 0 100 112" width="${size}" height="${size * 1.12}"><defs><linearGradient id="g1${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4ade80"/><stop offset="1" stop-color="#15803d"/></linearGradient><linearGradient id="g2${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d72e8"/><stop offset="1" stop-color="#2e2a7a"/></linearGradient></defs><path d="M30 42 V30 a20 20 0 0 1 40 0 V42" fill="none" stroke="url(#g1${id})" stroke-width="9"/><path d="M16 42 H86 V64 C86 86 66 100 51 108 C35 100 16 86 16 64Z" fill="url(#g2${id})"/><path d="M8 74 C28 40 70 30 94 42 C70 42 42 54 28 96 Z" fill="url(#g1${id})"/><circle cx="56" cy="66" r="11" fill="#0b0d1a"/><circle cx="56" cy="66" r="6" fill="#22c55e"/>${dots}</svg>`;
+}
+function paintBrand() {
+  const s = S.settings;
+  const h = (id) => (s.logo ? `<img src="${s.logo}" alt="logo">` : logoSVG(32, id)) + `<span>DK PROTECH</span>`;
+  $("#brand").innerHTML = h("h"); $("#brand2").innerHTML = h("f");
+  $("#fwa").innerHTML = s.whatsapp ? `<p><a href="https://wa.me/${esc(s.whatsapp)}" target="_blank" style="color:var(--g2)">💬 Escríbenos por WhatsApp</a></p>` : "";
+  $("#yr").textContent = new Date().getFullYear();
+}
+
+/* ---------- Firebase ---------- */
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+onSnapshot(doc(db, "settings", "main"), (snap) => {
+  S.settings = { ...DEF, ...(snap.exists() ? snap.data() : {}) };
+  const first = !S.ready; S.ready = true; paintBrand();
+  if (first || route() !== "admin") render(); else if (isAdmin()) paintPause();
+}, (e) => { console.error(e); $("#app").innerHTML = `<div class="card narrow center"><h2>No se pudo conectar</h2><p class="muted">Revisa tu conexión o desactiva el bloqueador de anuncios para esta página.</p></div>`; });
+
+onSnapshot(collection(db, "numbers"), (qs) => {
+  S.numbers = {}; qs.forEach((d) => (S.numbers[d.id] = d.data()));
+  S.sel = S.sel.filter((n) => !S.numbers[n]);
+  if (route() === "home") render(); updateBar();
+});
+
+onSnapshot(query(collection(db, "gallery"), orderBy("order")), (qs) => {
+  S.gallery = qs.docs.map((d) => ({ id: d.id, ...d.data() }));
+  if (route() === "home") render();
+  paintGallery();
+}, (e) => console.warn("Galería:", e.message));
+
+onAuthStateChanged(auth, (u) => {
+  S.user = u;
+  if (isAdmin() && !S.unsubOrders) {
+    S.unsubOrders = onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), (qs) => {
+      S.orders = qs.docs.map((d) => ({ id: d.id, ...d.data() }));
+      if (route() === "admin") renderAdminBody();
+    });
+  } else if (!isAdmin() && S.unsubOrders) { S.unsubOrders(); S.unsubOrders = null; S.orders = []; }
+  if (route() === "admin") render();
+});
+
+/* ---------- router ---------- */
+window.addEventListener("hashchange", () => { closeModal(); render(); window.scrollTo(0, 0); });
+function render() {
+  if (!S.ready) return;
+  const r = route();
+  $("#n-home").classList.toggle("act", r === "home"); $("#n-ver").classList.toggle("act", r === "verificar");
+  if (r === "verificar") { if (!$("#vq")) renderVerify(); } else if (r === "admin") renderAdmin(); else renderHome();
+  updateBar();
+}
+
+/* ================= GALERÍA ================= */
+const galImgs = () => [S.settings.prizeImg, ...S.gallery.map((g) => g.img)].filter(Boolean);
+function galleryHTML() {
+  const imgs = galImgs();
+  if (!imgs.length) return `<div class="prize">${logoSVG(130, "p")}</div>`;
+  if (S.gi >= imgs.length) S.gi = 0;
+  const many = imgs.length > 1;
+  return `<div><div class="prize" id="galMain" style="position:relative">
+    <img id="galImg" src="${imgs[S.gi]}" alt="Premio" data-gal="zoom" style="cursor:zoom-in">
+    ${many ? `<button class="garr gl" data-gal="prev">‹</button><button class="garr gr" data-gal="next">›</button><span class="gcount" id="galCnt">${S.gi + 1}/${imgs.length}</span>` : ""}
+  </div>
+  ${many ? `<div class="thumbs">${imgs.map((src, i) => `<img src="${src}" data-gal="${i}" class="${i === S.gi ? "on" : ""}" alt="foto ${i + 1}">`).join("")}</div>` : ""}</div>`;
+}
+function galGo(i) {
+  const imgs = galImgs(); if (!imgs.length) return;
+  S.gi = (i + imgs.length) % imgs.length;
+  const im = $("#galImg"); if (!im) return;
+  im.style.opacity = 0; setTimeout(() => { im.src = imgs[S.gi]; im.style.opacity = 1; }, 150);
+  const c = $("#galCnt"); if (c) c.textContent = `${S.gi + 1}/${imgs.length}`;
+  $$(".thumbs img").forEach((t, j) => t.classList.toggle("on", j === S.gi));
+}
+let galTouch = 0, galX = 0;
+document.addEventListener("click", (e) => {
+  const g = e.target.closest("[data-gal]"); if (!g) return;
+  const v = g.dataset.gal; galTouch = Date.now();
+  if (v === "prev") galGo(S.gi - 1);
+  else if (v === "next") galGo(S.gi + 1);
+  else if (v === "zoom") openModal(`<div class="mh"><b>${esc(S.settings.title)}</b><button class="x" data-close>✕</button></div><div class="mb center"><img src="${galImgs()[S.gi]}" style="max-width:100%;max-height:78vh;border-radius:10px"></div>`, true);
+  else galGo(+v);
+});
+document.addEventListener("touchstart", (e) => { if (e.target.closest("#galMain")) galX = e.touches[0].clientX; }, { passive: true });
+document.addEventListener("touchend", (e) => {
+  if (!galX) return; const dx = e.changedTouches[0].clientX - galX; galX = 0;
+  if (Math.abs(dx) > 40) { galTouch = Date.now(); galGo(S.gi + (dx < 0 ? 1 : -1)); }
+});
+setInterval(() => { if (route() === "home" && !$("#modal .ov") && galImgs().length > 1 && Date.now() - galTouch > 8000) galGo(S.gi + 1); }, 4000);
+
+function galAdminList() {
+  return S.gallery.length ? `<div class="galadm">${S.gallery.map((g) => `<div><img src="${g.img}"><button data-gdel="${g.id}" title="Quitar">✕</button></div>`).join("")}</div>` : `<p class="small muted" style="margin:0">Aún no hay fotos extra. La foto principal se muestra primero.</p>`;
+}
+function paintGallery() { const el = $("#galList"); if (el) el.innerHTML = galAdminList(); }
+document.addEventListener("change", async (e) => {
+  if (e.target.id !== "upGal") return;
+  const files = [...e.target.files]; if (!files.length) return;
+  toast(`Subiendo ${files.length} foto(s)...`);
+  let base = S.gallery.reduce((m, g) => Math.max(m, g.order || 0), 0), ok = 0;
+  for (const f of files) {
+    if (!f.type.startsWith("image/")) continue;
+    try { await setDoc(doc(collection(db, "gallery")), { img: await compress(f, 1400, 0.8), order: ++base }); ok++; }
+    catch (er) { console.error(er); toast("Error subiendo " + f.name, true); }
+  }
+  e.target.value = ""; if (ok) toast(`${ok} foto(s) agregada(s) ✔`);
+});
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-gdel]"); if (!b) return;
+  if (!(await ask("¿Quitar esta foto de la galería?"))) return;
+  try { await runOps([(w) => w.delete(doc(db, "gallery", b.dataset.gdel))]); toast("Foto quitada"); } catch (er) { console.error(er); toast("Error quitando foto", true); }
+});
+
+/* ================= PÁGINA PÚBLICA ================= */
+function renderHome() {
+  const s = S.settings, ended = !!s.winningNumber, paused = !s.open && !ended, closed = !s.open || ended, taken = Object.keys(S.numbers).length;
+  const pill = ended ? ["off", "SORTEO REALIZADO"] : paused ? ["off", "VENTA PAUSADA"] : ["on", "VENTA ABIERTA"];
+  const cell = (n) => {
+    const st = S.numbers[n]?.status, on = S.sel.includes(n);
+    const cls = n === s.winningNumber ? "winn" : st === "vendido" ? "sold" : st ? "res" : on ? "sel" : "";
+    return `<button class="num ${cls}" data-n="${n}" ${st || closed ? "disabled" : ""}><b>${n}</b>${st ? `<small>${st === "vendido" ? "VENDIDO" : "RESERVADO"}</small>` : ""}</button>`;
+  };
+  $("#app").innerHTML = `
+  ${ended ? `<div class="card win"><div style="font-size:40px">🏆</div><div class="muted small">NÚMERO GANADOR</div><div class="bignum">${esc(s.winningNumber)}</div><div>${s.winnerName ? `¡Felicidades <b>${esc(s.winnerName)}</b>!` : "El número no fue vendido. " + esc(s.unsoldRule)}</div></div>` : ""}
+  <div class="card">
+    <div class="hero">
+      ${galleryHTML()}
+      <div>
+        <span class="pill ${pill[0]}"><i></i>${pill[1]}</span>
+        <h1>${esc(s.title)}</h1>
+        <p class="muted">${esc(s.description)}</p>
+        <div class="price">${money(s.price)} <small>por número</small></div>
+        <ul class="info">
+          <li>📅 <span class="cap">${fmtDate(s.drawDate)}</span></li>
+          ${s.drawDate ? `<li>⏰ ${fmtTime(s.drawTime)}</li>` : ""}
+          <li>🎟️ Juega con: ${esc(s.lottery)}</li>
+          <li>🔢 Máximo ${maxN()} números por transferencia</li>
+        </ul>
+        ${!ended && s.showCountdown && s.drawDate ? `<div class="cdtitle" id="cdt"></div><div class="cd" id="cd"></div>` : ""}
+      </div>
+    </div>
+    <div class="prog"><div class="row between small muted" style="margin-bottom:5px"><span>${taken} de 100 números tomados</span><span>${taken}%</span></div><div class="bar"><div class="fill" style="width:${taken}%"></div></div></div>
+  </div>
+  ${paused ? `<div class="card pausebox"><div style="font-size:34px">⏸️</div><h2>Venta pausada</h2><p class="muted" style="margin:0">${esc(s.pauseMsg)}</p></div>` : ""}
+  <div class="card">
+    <div class="row between">
+      <h2 style="margin:0">🎟️ Elige tus números (00 – 99)</h2>
+      ${closed ? "" : `<button class="btn purple" id="rnd">🔀 Al azar</button>`}
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--card2);border:1px solid var(--bd)"></i>Disponible</span>
+      <span><i style="background:var(--g)"></i>Seleccionado</span>
+      <span><i style="background:#2a2110;border:1px solid var(--a)"></i>Reservado</span>
+      <span><i style="background:#15151c;border:1px solid #333"></i>Vendido</span>
+    </div>
+    <div class="grid">${NUMS.map(cell).join("")}</div>
+    <div class="note">🛡️ Los números reservados quedan apartados a tu nombre hasta que validemos tu transferencia (<b>máximo 24 horas</b>). <b>Máximo ${maxN()} números por transferencia.</b> ${esc(s.unsoldRule)}</div>
+  </div>`;
+  $$(".num[data-n]").forEach((b) => (b.onclick = () => toggleNum(b.dataset.n)));
+  const r = $("#rnd"); if (r) r.onclick = () => {
+    if (S.sel.length >= maxN()) return showMaxMsg();
+    const free = NUMS.filter((n) => !S.numbers[n] && !S.sel.includes(n));
+    if (!free.length) return toast("No quedan números disponibles", true);
+    toggleNum(free[Math.floor(Math.random() * free.length)]);
+  };
+  tick();
+}
+function showMaxMsg() {
+  const m = maxN();
+  openModal(`<div class="mb center"><div style="font-size:44px">✋</div><h2>Máximo ${m} números por transferencia</h2>
+    <p class="muted">Si quieres jugar más de ${m} números, por favor completa esta jugada primero y luego realiza otra compra con una nueva transferencia.</p>
+    <button class="btn green full" data-close>ENTENDIDO</button></div>`);
+}
+function toggleNum(n) {
+  if (!S.sel.includes(n) && S.sel.length >= maxN()) return showMaxMsg();
+  S.sel = S.sel.includes(n) ? S.sel.filter((x) => x !== n) : [...S.sel, n].sort();
+  const b = $(`.num[data-n="${n}"]`); if (b) b.classList.toggle("sel", S.sel.includes(n));
+  updateBar();
+}
+function updateBar() {
+  const s = S.settings, show = route() === "home" && S.sel.length > 0 && s.open && !s.winningNumber;
+  $("#bar").style.display = show ? "block" : "none"; if (!show) return;
+  $("#barNums").textContent = `${S.sel.length}/${maxN()} números: ${S.sel.join(", ")}`;
+  $("#barTot").textContent = money(S.sel.length * s.price);
+  const ok = S.sel.length >= (s.minNumbers || 1);
+  $("#barGo").disabled = !ok; $("#barGo").textContent = ok ? "CONTINUAR" : `Mínimo ${s.minNumbers}`;
+}
+$("#barClear").onclick = () => { S.sel = []; $$(".num.sel").forEach((b) => b.classList.remove("sel")); updateBar(); };
+$("#barGo").onclick = () => openCheckout();
+
+function tick() {
+  const el = $("#cd"), tl = $("#cdt"); if (!el || !tl) return; const s = S.settings;
+  const d = new Date(`${s.drawDate}T${s.drawTime || "00:00"}:00`).getTime() - Date.now();
+  if (d <= 0) { tl.innerHTML = "🎉 ¡Llegó el día del sorteo!"; el.style.display = "none"; return; }
+  const days = Math.floor(d / 864e5);
+  tl.innerHTML = days >= 1 ? `⏳ Faltan <b>${days}</b> día${days === 1 ? "" : "s"} para el sorteo` : `⏳ ¡El sorteo es <b>HOY</b>!`;
+  const v = [[days, "Días"], [Math.floor(d / 36e5) % 24, "Horas"], [Math.floor(d / 6e4) % 60, "Min"], [Math.floor(d / 1e3) % 60, "Seg"]];
+  el.style.display = ""; el.innerHTML = v.map(([n, l]) => `<div><b>${String(n).padStart(2, "0")}</b><span>${l}</span></div>`).join("");
+}
+setInterval(tick, 1000);
+
+/* ---------- checkout ---------- */
+let CO = { acc: 0, voucher: null };
+function openCheckout() {
+  const s = S.settings; CO = { acc: 0, voucher: null };
+  const total = S.sel.length * s.price;
+  openModal(`
+  <div class="mh"><div><b style="color:var(--b)">${esc(s.title)}</b><div class="small muted">Completa tu compra de números</div></div><button class="x" data-close>✕</button></div>
+  <div class="mb">
+    <div class="box"><div class="small muted" style="margin-bottom:8px">TUS NÚMEROS (${S.sel.length}/${maxN()})</div><div class="chips">${S.sel.map((n) => `<span class="chip g">${n}</span>`).join("")}</div></div>
+    <div class="f2">
+      <label>Nombre completo *<input id="cName" placeholder="Ej: Juan Pérez" autocomplete="name"></label>
+      <label>Número de WhatsApp *<input id="cPhone" placeholder="809-555-5555" inputmode="numeric" autocomplete="tel" maxlength="12"><span class="hint">📲 Preferiblemente WhatsApp. 10 dígitos (809, 829 u 849).</span></label>
+    </div>
+    <div style="font-size:14px;margin-bottom:8px">Método de pago *</div>
+    <div class="accs">${s.accounts.map((a, i) => `<button class="acc ${i === 0 ? "on" : ""}" data-acc="${i}">${a.logo ? `<img src="${a.logo}" alt="">` : ""}${esc(a.bank)}<br><span class="muted">(${esc(a.type)})</span></button>`).join("")}</div>
+    <div id="accBox"></div>
+    <div style="font-size:14px;margin:16px 0 8px">Comprobante de pago *</div>
+    <label class="drop" id="drop"><input type="file" id="cFile" accept="image/*" hidden><div id="dropIn">⬆️<div>Toca para subir tu comprobante</div><div class="small muted">JPG, PNG o WEBP</div></div></label>
+    <div style="margin:16px 0"><label class="chk"><input type="checkbox" id="cTerms"> Confirmo que soy mayor de 18 años y que mi nombre y número de WhatsApp son correctos. Entiendo que mis números quedan reservados hasta que validen mi pago (máximo 24 horas) y que si el pago no se confirma, los números se liberan.</label></div>
+    <div id="cErr"></div>
+    <div class="box row between"><span class="muted">TOTAL A PAGAR</span><span style="font-size:24px;font-weight:900;color:var(--g2)">${money(total)}</span></div>
+    <button class="btn green full" id="cSend">CONFIRMAR COMPRA</button>
+    <p class="center small muted">Tu compra será validada en máximo 24 horas.</p>
+  </div>`);
+  phoneField($("#cPhone"));
+  const paintAcc = () => {
+    const a = s.accounts[CO.acc]; if (!a) return ($("#accBox").innerHTML = "");
+    $("#accBox").innerHTML = `<div class="accbox"><div class="row">${a.logo ? `<img class="bl" src="${a.logo}" alt="">` : ""}<b style="color:#fff">${esc(a.bank)} (${esc(a.type)})</b></div><div class="row between" style="margin-top:10px"><div><div class="small muted">Número de cuenta</div><div class="mono">${esc(a.number)}</div></div><button class="btn yellow" id="cpAcc">📋 COPIAR</button></div><div class="small muted" style="margin-top:8px">Titular: <b style="color:var(--t)">${esc(a.holder)}</b></div></div>`;
+    $("#cpAcc").onclick = () => copy(a.number);
+  };
+  paintAcc();
+  $$("[data-acc]").forEach((b) => (b.onclick = () => { CO.acc = +b.dataset.acc; $$("[data-acc]").forEach((x) => x.classList.toggle("on", x === b)); paintAcc(); }));
+  $("#cFile").onchange = async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    if (!f.type.startsWith("image/")) return showErr("Sube una imagen (JPG, PNG o WEBP).");
+    try { CO.voucher = await compress(f, 1000, 0.65); $("#drop").classList.add("ok"); $("#dropIn").innerHTML = `<img src="${CO.voucher}"><span class="small" style="color:var(--g2)">Comprobante cargado · toca para cambiar</span>`; showErr(""); }
+    catch { showErr("No se pudo leer la imagen. Si es de iPhone (.HEIC), toma una captura de pantalla y súbela."); }
+  };
+  $("#cSend").onclick = submitOrder;
+}
+function showErr(m) { $("#cErr").innerHTML = m ? `<div class="err">⚠️ ${esc(m)}</div>` : ""; }
+
+async function submitOrder() {
+  const s = S.settings, name = $("#cName").value.trim(), phone = normPhone($("#cPhone").value), a = s.accounts[CO.acc];
+  if (!s.open || s.winningNumber) return showErr("La venta está pausada en este momento.");
+  if (S.sel.length > maxN()) return showErr(`Máximo ${maxN()} números por transferencia.`);
+  if (name.split(/\s+/).length < 2) return showErr("Escribe tu nombre y apellido.");
+  if (!validPhone(phone)) { $("#cPhone").classList.add("bad"); return showErr("Escribe un número de WhatsApp válido de 10 dígitos que empiece con 809, 829 u 849 (ej: 809-555-5555)."); }
+  if (!a) return showErr("Selecciona un método de pago.");
+  if (!CO.voucher) return showErr("Sube el comprobante de la transferencia.");
+  if (!$("#cTerms").checked) return showErr("Debes aceptar los términos.");
+  const btn = $("#cSend"); btn.disabled = true; btn.textContent = "ENVIANDO..."; showErr("");
+  const numbers = [...S.sel].sort(), total = numbers.length * s.price, account = `${a.bank} (${a.type})`;
+  const orderRef = doc(collection(db, "orders")), id = orderRef.id;
+  try {
+    await runTransaction(db, async (tx) => {
+      const refs = numbers.map((n) => doc(db, "numbers", n));
+      const snaps = await Promise.all(refs.map((r) => tx.get(r)));
+      const busy = snaps.filter((x) => x.exists()).map((x) => x.id);
+      if (busy.length) throw new Error("BUSY:" + busy.join(", "));
+      tx.set(orderRef, { name, phone, numbers, total, account: `${account} ${a.number}`, status: "pendiente", createdAt: serverTimestamp() });
+      tx.set(doc(db, "vouchers", id), { img: CO.voucher });
+      tx.set(doc(db, "lookup", phone, "items", id), { numbers, total, status: "pendiente", createdAt: serverTimestamp() });
+      refs.forEach((r) => tx.set(r, { status: "reservado", orderId: id }));
+    });
+    S.sel = []; updateBar();
+    openModal(`<div class="mb center">
+      <div style="font-size:50px">✅</div><h2>¡COMPRA RECIBIDA!</h2>
+      <p class="muted">Gracias ${esc(name.split(" ")[0])}. Tus números quedaron reservados.</p>
+      <div class="chips" style="justify-content:center;margin:14px 0">${numbers.map((n) => `<span class="chip a" style="font-size:20px;padding:10px 14px">${n}</span>`).join("")}</div>
+      <span class="badge b-pendiente">Pendiente de validación</span>
+      <div class="box" style="text-align:left;margin-top:14px">Tu pago será validado en un <b>máximo de 24 horas</b>. Luego entra al <b>Verificador de Números</b> con tu WhatsApp (${fmtPhone(phone)}) para confirmar que tus números fueron aprobados.</div>
+      <div class="box" style="text-align:left;border:1px solid #25d366">📲 <b>Último paso:</b> toca el botón verde para enviarnos tu compra por WhatsApp y <b>adjunta la foto del comprobante</b> en ese mismo chat.</div>
+      <a class="btn full" style="background:#25d366;color:#000;font-weight:900;margin-bottom:10px" target="_blank" href="https://wa.me/${OWNER_WA}?text=${encodeURIComponent(ownerMsg({ id, name, phone, numbers, total, account }))}">💬 ENVIAR MI COMPRA POR WHATSAPP</a>
+      <div class="row"><button class="btn" style="flex:1" id="okCp">📋 Copiar números</button><a class="btn" style="flex:1" href="#/verificar">Verificador de Números</a></div>
+    </div>`);
+    $("#okCp").onclick = () => copy(numbers.join(", "));
+  } catch (e) {
+    btn.disabled = false; btn.textContent = "CONFIRMAR COMPRA";
+    if (String(e.message).startsWith("BUSY:")) showErr(`Alguien tomó el/los número(s) ${e.message.slice(5)} hace un momento. Ciérralo y elige otros.`);
+    else { console.error(e); showErr("No se pudo guardar tu compra. Revisa tu conexión e intenta de nuevo."); }
+  }
+}
+
+/* ================= VERIFICADOR ================= */
+function renderVerify() {
+  $("#app").innerHTML = `<div class="card narrow">
+    <div class="center"><div style="font-size:36px">🔍</div><h2>Verificador de Números</h2><p class="muted">Escribe el número de WhatsApp que usaste al comprar</p></div>
+    <div class="row" style="flex-wrap:nowrap;margin-bottom:16px"><input id="vq" placeholder="809-555-5555" inputmode="numeric" maxlength="12"><button class="btn purple" id="vgo">Buscar</button></div>
+    <div id="vres"></div></div>`;
+  phoneField($("#vq"));
+  const go = async () => {
+    const p = normPhone($("#vq").value);
+    if (!validPhone(p)) return ($("#vres").innerHTML = `<p class="center muted">Escribe tu número de 10 dígitos (809, 829 u 849).</p>`);
+    $("#vres").innerHTML = `<p class="center muted">Buscando...</p>`;
+    try {
+      const qs = await getDocs(collection(db, "lookup", p, "items"));
+      if (qs.empty) return ($("#vres").innerHTML = `<p class="center muted">No encontramos compras con ese número.</p>`);
+      const win = S.settings.winningNumber;
+      $("#vres").innerHTML = qs.docs.map((d) => d.data()).sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)).map((o) => `
+        <div class="oc"><div class="row between" style="margin-bottom:8px"><b>${fmtDT(o.createdAt)}</b><span class="badge b-${o.status}">${o.status.toUpperCase()}</span></div>
+        <div class="chips">${o.numbers.map((n) => `<span class="chip ${o.status === "aprobado" && n === win ? "g" : o.status === "pendiente" ? "a" : ""}">${n}</span>`).join("")}</div>
+        <div class="small muted" style="margin-top:8px">${money(o.total)}</div>
+        ${o.status === "pendiente" ? `<div class="small" style="color:var(--a);margin-top:6px">Tu pago está en revisión. Se valida en máximo 24 horas.</div>` : ""}
+        ${o.status === "rechazado" ? `<div class="small" style="color:#fca5a5;margin-top:6px">Este pago no fue validado o la reserva fue liberada. Escríbenos por WhatsApp.</div>` : ""}</div>`).join("");
+    } catch (e) { console.error(e); $("#vres").innerHTML = `<p class="center" style="color:var(--r)">Error al buscar. Intenta de nuevo.</p>`; }
+  };
+  $("#vgo").onclick = go; $("#vq").onkeydown = (e) => e.key === "Enter" && go();
+}
+
+/* ================= ADMIN ================= */
+function renderAdmin() {
+  if (!S.user) {
+    if ($("#loginForm")) return;
+    $("#app").innerHTML = `<div class="card narrow center"><div style="font-size:36px">🔒</div><h2>Login al panel administrativo</h2>
+      <form id="loginForm" autocomplete="on" style="text-align:left">
+        <label>Usuario<input id="aus" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+        <label>Contraseña<div class="pw"><input id="apw" type="password" autocomplete="current-password"><button type="button" id="aeye" title="Mostrar">👁️</button></div></label>
+        <div id="aerr"></div><button class="btn purple full" type="submit" id="alog">ENTRAR</button>
+      </form></div>`;
+    $("#aeye").onclick = () => { const i = $("#apw"); i.type = i.type === "password" ? "text" : "password"; };
+    $("#loginForm").onsubmit = async (e) => {
+      e.preventDefault();
+      const u = $("#aus").value.trim().toLowerCase(), p = $("#apw").value;
+      if (!u || !p) return ($("#aerr").innerHTML = `<div class="err">Escribe usuario y contraseña</div>`);
+      $("#alog").disabled = true; $("#alog").textContent = "ENTRANDO...";
+      try { await signInWithEmailAndPassword(auth, u.includes("@") ? u : `${u}@${ADMIN_DOMAIN}`, p); }
+      catch (er) {
+        $("#alog").disabled = false; $("#alog").textContent = "ENTRAR";
+        $("#aerr").innerHTML = `<div class="err">${er.code === "auth/too-many-requests" ? "Demasiados intentos. Espera unos minutos." : "Usuario o contraseña incorrectos"}</div>`;
+      }
+    };
+    return;
+  }
+  if (!isAdmin()) { $("#app").innerHTML = `<div class="card narrow center"><h2>Sin permiso</h2><p class="muted">Esta cuenta no es administradora.</p><button class="btn" id="lo">Salir</button></div>`; $("#lo").onclick = () => signOut(auth); return; }
+  $("#app").innerHTML = `
+    <div class="row between" style="margin-bottom:14px"><h2 style="margin:0">⚙️ Panel de administración</h2>
+      <div class="row"><button class="btn blue" id="csv">⬇️ Excel</button><button class="btn" id="lo">Salir</button></div></div>
+    <div id="pauseBox"></div>
+    <div class="stats" id="stats"></div>
+    <div class="tabs">${[["pedidos", "Pedidos"], ["tablero", "Tablero 00-99"], ["config", "Configurar rifa"], ["sorteo", "Sorteo y cierre"], ["cuenta", "Mi cuenta"]].map(([k, l]) => `<button data-tab="${k}" class="${S.tab === k ? "on" : ""}">${l}</button>`).join("")}</div>
+    <div id="tabc"></div>`;
+  $("#lo").onclick = () => signOut(auth);
+  $("#csv").onclick = exportCSV;
+  $$("[data-tab]").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; S.draftAcc = null; renderAdmin(); }));
+  paintPause();
+  renderAdminBody(true);
+  const vp = new URLSearchParams(location.hash.split("?")[1] || "").get("v");
+  if (vp) { history.replaceState(null, "", "#/admin"); viewVoucher(vp); }
+}
+function paintPause() {
+  const el = $("#pauseBox"); if (!el) return; const s = S.settings;
+  if (s.winningNumber) { el.innerHTML = `<div class="card adpause" style="border-color:var(--g)"><div>🏆 <b>Sorteo realizado.</b> Número ganador: <b style="color:var(--g2)">${esc(s.winningNumber)}</b><div class="small muted">Ve a "Sorteo y cierre" para empezar una rifa nueva.</div></div></div>`; return; }
+  el.innerHTML = `<div class="card adpause" style="border-color:${s.open ? "var(--g)" : "var(--r)"}">
+    <div><b style="color:${s.open ? "var(--g2)" : "var(--r)"};font-size:18px">${s.open ? "🟢 VENTA ABIERTA" : "🔴 VENTA PAUSADA"}</b><div class="small muted">${s.open ? "La gente puede comprar números." : "Nadie puede comprar. Los números ya vendidos y reservados se mantienen."}</div></div>
+    <button class="btn ${s.open ? "redf" : "green"}" id="pauseBtn" style="padding:14px 22px">${s.open ? "⏸️ PAUSAR VENTA" : "▶️ REANUDAR VENTA"}</button></div>`;
+  $("#pauseBtn").onclick = async () => {
+    const open = !s.open;
+    if (!open && !(await ask("¿Pausar la venta? Nadie podrá comprar números hasta que la reanudes."))) return;
+    try { await setDoc(doc(db, "settings", "main"), { open }, { merge: true }); toast(open ? "Venta reanudada ▶️" : "Venta pausada ⏸️"); } catch (e) { console.error(e); toast("Error", true); }
+  };
+}
+function renderAdminBody(full) {
+  if (!$("#stats")) return;
+  const ap = S.orders.filter((o) => o.status === "aprobado"), pe = S.orders.filter((o) => o.status === "pendiente");
+  const sold = ap.reduce((t, o) => t + o.numbers.length, 0), res = pe.reduce((t, o) => t + o.numbers.length, 0);
+  $("#stats").innerHTML = [["Vendidos", sold, "var(--g2)"], ["Reservados", res, "var(--a)"], ["Disponibles", 100 - sold - res, "var(--b)"], ["Cobrado", money(ap.reduce((t, o) => t + Number(o.total || 0), 0)), "var(--g2)"]].map(([l, v, c]) => `<div class="card"><span class="small muted">${l}</span><b style="color:${c}">${v}</b></div>`).join("");
+  const pb = $('[data-tab="pedidos"]'); if (pb) pb.textContent = `Pedidos${pe.length ? ` (${pe.length})` : ""}`;
+  if (S.tab === "pedidos") { if (full || !$("#olist")) tabPedidos(); else paintOrders(); }
+  if (S.tab === "tablero") tabTablero();
+  if (full && S.tab === "config") tabConfig();
+  if (full && S.tab === "sorteo") tabSorteo();
+  if (full && S.tab === "cuenta") tabCuenta();
+}
+
+/* ----- pedidos ----- */
+function tabPedidos() {
+  $("#tabc").innerHTML = `<div class="card"><div class="row" style="flex-wrap:nowrap;margin-bottom:14px">
+    <input id="oq" placeholder="Buscar nombre, WhatsApp o número" value="${esc(S.q)}">
+    <select id="of" style="max-width:170px">${[["pendiente", "Pendientes"], ["aprobado", "Aprobados"], ["rechazado", "Rechazados"], ["todos", "Todos"]].map(([v, l]) => `<option value="${v}" ${S.filter === v ? "selected" : ""}>${l}</option>`).join("")}</select>
+  </div><div id="olist"></div></div>`;
+  $("#oq").oninput = (e) => { S.q = e.target.value; paintOrders(); };
+  $("#of").onchange = (e) => { S.filter = e.target.value; paintOrders(); };
+  paintOrders();
+}
+function paintOrders() {
+  const q = S.q.trim().toLowerCase(), qd = digits(q);
+  const list = S.orders.filter((o) => (S.filter === "todos" || o.status === S.filter) && (!q || o.name.toLowerCase().includes(q) || (qd && (o.phone || "").includes(qd)) || o.numbers.includes(q.padStart(2, "0"))));
+  $("#olist").innerHTML = list.length ? list.map((o) => `
+    <div class="oc">
+      <div class="row between"><div><b style="color:#fff">${esc(o.name)}</b>${o.manual ? ` <span class="badge" style="background:#6366f133;color:#c7d2fe">MANUAL</span>` : ""}<div class="small muted">📱 ${esc(o.phone ? fmtPhone(o.phone) : "sin teléfono")} · ${esc(o.account)}</div></div>
+      <div style="text-align:right"><span class="badge b-${o.status}">${o.status.toUpperCase()}</span><div class="small muted" style="margin-top:4px">${fmtDT(o.createdAt)}</div></div></div>
+      <div class="chips" style="margin:10px 0">${o.numbers.map((n) => `<span class="chip">${n}</span>`).join("")}</div>
+      <b style="color:var(--g2)">${money(o.total)}</b>
+      <div class="row" style="margin-top:10px">
+        ${o.manual ? "" : `<button class="btn blue" data-v="${o.id}">👁️ Comprobante</button>`}
+        ${o.status !== "aprobado" ? `<button class="btn green" data-ap="${o.id}">✔ Aprobar (vendido)</button>` : ""}
+        ${o.status !== "rechazado" ? `<button class="btn red" data-rj="${o.id}">✕ Rechazar / liberar</button>` : ""}
+        ${o.phone ? `<a class="btn wa" target="_blank" href="${waMsg(o)}">💬 WhatsApp</a>` : ""}
+        <button class="btn" data-del="${o.id}">🗑️</button>
+      </div>
+    </div>`).join("") : `<p class="center muted" style="padding:30px 0">No hay registros aquí.</p>`;
+  $$("[data-v]").forEach((b) => (b.onclick = () => viewVoucher(b.dataset.v)));
+  $$("[data-ap]").forEach((b) => (b.onclick = () => approve(b.dataset.ap)));
+  $$("[data-rj]").forEach((b) => (b.onclick = async () => { const o = getO(b.dataset.rj); if (await ask(`¿Rechazar a ${o.name}? Los números ${o.numbers.join(", ")} quedarán libres.`)) reject(o.id); }));
+  $$("[data-del]").forEach((b) => (b.onclick = async () => { const o = getO(b.dataset.del); if (await ask(`¿Eliminar definitivamente el registro de ${o.name}? Sus números quedarán libres.`)) del(o.id); }));
+}
+const getO = (id) => S.orders.find((o) => o.id === id);
+function waMsg(o) {
+  const s = S.settings, f = o.name.split(" ")[0];
+  const m = o.status === "aprobado" ? `Hola ${f}, tu pago fue validado ✅. Tus números para "${s.title}" son: ${o.numbers.join(", ")}. Sorteo: ${fmtDate(s.drawDate)} ${fmtTime(s.drawTime)} con ${s.lottery}. ¡Suerte! – DK Protech`
+    : o.status === "rechazado" ? `Hola ${f}, no pudimos validar tu pago de los números ${o.numbers.join(", ")}. Escríbenos para revisarlo. – DK Protech`
+    : `Hola ${f}, te escribimos de DK Protech sobre tu compra de los números ${o.numbers.join(", ")}.`;
+  return waLink(o.phone, m);
+}
+async function viewVoucher(id) {
+  let o = getO(id);
+  if (!o) { try { const d = await getDoc(doc(db, "orders", id)); if (!d.exists()) return toast("Pedido no encontrado", true); o = { id, ...d.data() }; } catch { return toast("Error cargando pedido", true); } }
+  openModal(`<div class="mh"><div><b>${esc(o.name)}</b><div class="small muted">${money(o.total)} · ${esc(o.account)} · ${o.numbers.join(", ")}</div></div><button class="x" data-close>✕</button></div><div class="mb center" id="vbody"><p class="muted">Cargando comprobante...</p></div>`, true);
+  try {
+    const d = await getDoc(doc(db, "vouchers", id));
+    $("#vbody").innerHTML = (d.exists() ? `<img src="${d.data().img}" style="max-width:100%;max-height:65vh;border-radius:10px">` : `<p class="muted">Este pedido no tiene comprobante.</p>`)
+      + (o.status === "pendiente" ? `<div class="row" style="margin-top:14px"><button class="btn red" style="flex:1" id="vrj">Rechazar</button><button class="btn green" style="flex:1" id="vap">Aprobar pago</button></div>` : "");
+    if ($("#vap")) { $("#vap").onclick = () => { closeModal(); approve(id); }; $("#vrj").onclick = () => { closeModal(); reject(id); }; }
+  } catch (e) { $("#vbody").innerHTML = `<p style="color:var(--r)">Error cargando comprobante.</p>`; }
+}
+function approveOps(o) {
+  const ops = [(b) => b.update(doc(db, "orders", o.id), { status: "aprobado", validatedAt: serverTimestamp() })];
+  if (o.phone) ops.push((b) => b.set(doc(db, "lookup", o.phone, "items", o.id), { numbers: o.numbers, total: o.total, status: "aprobado" }, { merge: true }));
+  o.numbers.forEach((n) => ops.push((b) => b.set(doc(db, "numbers", n), { status: "vendido", orderId: o.id })));
+  return ops;
+}
+function rejectOps(o) {
+  const ops = [(b) => b.update(doc(db, "orders", o.id), { status: "rechazado", validatedAt: serverTimestamp() })];
+  if (o.phone) ops.push((b) => b.set(doc(db, "lookup", o.phone, "items", o.id), { status: "rechazado" }, { merge: true }));
+  o.numbers.forEach((n) => { if (S.numbers[n]?.orderId === o.id) ops.push((b) => b.delete(doc(db, "numbers", n))); });
+  return ops;
+}
+async function approve(id) {
+  const o = getO(id); if (!o) return;
+  const conflict = o.numbers.filter((n) => S.numbers[n] && S.numbers[n].orderId !== id);
+  if (conflict.length) return toast(`Los números ${conflict.join(", ")} ya están tomados por otra persona`, true);
+  try { await runOps(approveOps(o)); toast("Pago aprobado ✔ Números marcados como vendidos"); } catch (e) { console.error(e); toast("Error al aprobar", true); }
+}
+async function reject(id) {
+  const o = getO(id); if (!o) return;
+  try { await runOps(rejectOps(o)); toast("Rechazado, números liberados"); } catch (e) { console.error(e); toast("Error al rechazar", true); }
+}
+async function del(id) {
+  const o = getO(id); if (!o) return;
+  const ops = [(b) => b.delete(doc(db, "orders", id)), (b) => b.delete(doc(db, "vouchers", id))];
+  if (o.phone) ops.push((b) => b.delete(doc(db, "lookup", o.phone, "items", id)));
+  o.numbers.forEach((n) => { if (S.numbers[n]?.orderId === id) ops.push((b) => b.delete(doc(db, "numbers", n))); });
+  try { await runOps(ops); toast("Registro eliminado"); } catch (e) { console.error(e); toast("Error al eliminar", true); }
+}
+
+/* ----- tablero ----- */
+function tabTablero() {
+  const owner = {}; S.orders.filter((o) => o.status !== "rechazado").forEach((o) => o.numbers.forEach((n) => (owner[n] = o)));
+  S.msel = S.msel.filter((n) => !owner[n] && !S.numbers[n]);
+  $("#tabc").innerHTML = `<div class="card">
+    <p class="small muted" style="margin-top:0">🟢 Verde = pagado (vendido) · 🟡 Amarillo = reservado, pago pendiente. Toca un número ocupado para ver quién lo compró.<br>
+    <b style="color:var(--t)">Para marcar números como vendidos</b> (venta en efectivo o por fuera de la página): toca los números libres y luego el botón verde de abajo.</p>
+    <div class="board">${NUMS.map((n) => {
+      const o = owner[n];
+      if (o) return `<div class="bc ${o.status === "aprobado" ? "v" : "r"}" data-ow="${o.id}" data-num="${n}"><b>${n}</b><div class="nm">${esc(o.name.split(" ")[0])}</div></div>`;
+      if (S.numbers[n]) return `<div class="bc r"><b>${n}</b>ocupado</div>`;
+      return `<div class="bc free ${S.msel.includes(n) ? "pick" : ""}" data-free="${n}"><b>${n}</b>${S.msel.includes(n) ? "✔" : "libre"}</div>`;
+    }).join("")}</div>
+    <div class="row" style="margin-top:14px"><button class="btn green" id="mSell" ${S.msel.length ? "" : "disabled"}>✔ Marcar como vendido${S.msel.length ? ` (${S.msel.join(", ")})` : ""}</button>${S.msel.length ? `<button class="btn" id="mClr">Limpiar selección</button>` : ""}</div></div>`;
+  $$("[data-free]").forEach((c) => (c.onclick = () => { const n = c.dataset.free; S.msel = S.msel.includes(n) ? S.msel.filter((x) => x !== n) : [...S.msel, n].sort(); tabTablero(); }));
+  if ($("#mClr")) $("#mClr").onclick = () => { S.msel = []; tabTablero(); };
+  $("#mSell").onclick = manualSale;
+  $$("[data-ow]").forEach((c) => (c.onclick = () => {
+    const o = getO(c.dataset.ow);
+    openModal(`<div class="mh"><b>Número ${c.dataset.num}</b><button class="x" data-close>✕</button></div><div class="mb">
+      <h3 style="margin-top:0">${esc(o.name)}</h3><p class="muted">📱 ${esc(o.phone ? fmtPhone(o.phone) : "sin teléfono")}<br>🏦 ${esc(o.account)}<br>🕒 ${fmtDT(o.createdAt)}</p>
+      <div class="chips" style="margin-bottom:12px">${o.numbers.map((n) => `<span class="chip">${n}</span>`).join("")}</div>
+      <span class="badge b-${o.status}">${o.status.toUpperCase()}</span> <b style="color:var(--g2);margin-left:8px">${money(o.total)}</b>
+      <div class="row" style="margin-top:14px">
+        ${o.manual ? "" : `<button class="btn blue" id="tv">👁️ Comprobante</button>`}
+        ${o.status === "pendiente" ? `<button class="btn green" id="tap">✔ Marcar vendido</button>` : ""}
+        <button class="btn red" id="trj">✕ Liberar</button>
+        ${o.phone ? `<a class="btn wa" target="_blank" href="${waMsg(o)}">💬 WhatsApp</a>` : ""}
+      </div></div>`);
+    if ($("#tv")) $("#tv").onclick = () => viewVoucher(o.id);
+    if ($("#tap")) $("#tap").onclick = () => { closeModal(); approve(o.id); };
+    $("#trj").onclick = async () => { closeModal(); if (await ask(`¿Liberar los números ${o.numbers.join(", ")} de ${o.name}?`)) reject(o.id); };
+  }));
+}
+function manualSale() {
+  const nums = [...S.msel].sort(), price = Number(S.settings.price) || 0;
+  openModal(`<div class="mh"><b>Registrar venta manual</b><button class="x" data-close>✕</button></div><div class="mb">
+    <div class="box"><div class="small muted" style="margin-bottom:6px">NÚMEROS</div><div class="chips">${nums.map((n) => `<span class="chip g">${n}</span>`).join("")}</div></div>
+    <label>Nombre completo *<input id="mName"></label>
+    <label>Número de WhatsApp (opcional, para que pueda usar el verificador)<input id="mPhone" inputmode="numeric" maxlength="12" placeholder="809-555-5555"></label>
+    <div class="f2"><label>Forma de pago<input id="mAcc" value="Efectivo"></label><label>Monto cobrado (RD$)<input id="mTot" type="number" value="${nums.length * price}"></label></div>
+    <div id="mErr"></div>
+    <button class="btn green full" id="mGo">GUARDAR COMO VENDIDO</button></div>`);
+  phoneField($("#mPhone"));
+  $("#mGo").onclick = async () => {
+    const name = $("#mName").value.trim(), phone = normPhone($("#mPhone").value), total = Number($("#mTot").value) || 0, account = ($("#mAcc").value.trim() || "Efectivo") + " (manual)";
+    if (name.length < 3) return ($("#mErr").innerHTML = `<div class="err">Escribe el nombre.</div>`);
+    if (phone && !validPhone(phone)) return ($("#mErr").innerHTML = `<div class="err">El WhatsApp debe tener 10 dígitos (809, 829 u 849) o dejarlo vacío.</div>`);
+    $("#mGo").disabled = true;
+    const ref = doc(collection(db, "orders")), id = ref.id;
+    try {
+      await runTransaction(db, async (tx) => {
+        const refs = nums.map((n) => doc(db, "numbers", n)); const sn = await Promise.all(refs.map((r) => tx.get(r)));
+        const busy = sn.filter((x) => x.exists()).map((x) => x.id); if (busy.length) throw new Error("BUSY:" + busy.join(", "));
+        tx.set(ref, { name, phone, numbers: nums, total, account, status: "aprobado", manual: true, createdAt: serverTimestamp(), validatedAt: serverTimestamp() });
+        if (phone) tx.set(doc(db, "lookup", phone, "items", id), { numbers: nums, total, status: "aprobado", createdAt: serverTimestamp() });
+        refs.forEach((r) => tx.set(r, { status: "vendido", orderId: id }));
+      });
+      S.msel = []; closeModal(); toast("Venta registrada ✔"); tabTablero();
+    } catch (e) {
+      $("#mGo").disabled = false;
+      $("#mErr").innerHTML = `<div class="err">${String(e.message).startsWith("BUSY:") ? "Estos números se acaban de ocupar: " + e.message.slice(5) : "No se pudo guardar. Revisa las reglas de Firebase."}</div>`;
+      console.error(e);
+    }
+  };
+}
+
+/* ----- configuración ----- */
+function tabConfig() {
+  const s = S.settings; if (!S.draftAcc) S.draftAcc = JSON.parse(JSON.stringify(s.accounts || []));
+  $("#tabc").innerHTML = `<div class="card">
+    <div class="f2">
+      <label>Premio / título<input id="fTitle" value="${esc(s.title)}"></label>
+      <label>Precio por número (RD$)<input id="fPrice" type="number" min="1" value="${esc(s.price)}"></label>
+      <label class="span2">Descripción<textarea id="fDesc" rows="2">${esc(s.description)}</textarea></label>
+      <label>Fecha del sorteo<input id="fDate" type="date" value="${esc(s.drawDate)}"></label>
+      <label>Hora del sorteo<input id="fTime" type="time" value="${esc(s.drawTime)}"></label>
+      <label class="chk span2" style="font-size:14px;color:var(--t);align-items:center"><input type="checkbox" id="fCd" ${s.showCountdown ? "checked" : ""}> Mostrar conteo de días restantes en la página</label>
+      <label>Lotería con la que juega<input id="fLot" value="${esc(s.lottery)}"></label>
+      <label>Tu WhatsApp (ej: 18098298455)<input id="fWa" value="${esc(s.whatsapp)}"></label>
+      <label>Mínimo de números por compra<input id="fMin" type="number" min="1" value="${esc(s.minNumbers)}"></label>
+      <label>Máximo de números por transferencia<input id="fMax" type="number" min="1" max="100" value="${esc(maxN())}"></label>
+      <label class="span2">Regla si el número ganador no se vendió<input id="fRule" value="${esc(s.unsoldRule)}"></label>
+      <label class="span2">Mensaje cuando la venta está pausada<input id="fPause" value="${esc(s.pauseMsg)}"></label>
+    </div>
+    <h3>Cuentas bancarias</h3>
+    <p class="small muted" style="margin-top:-6px">Toca el cuadro <b>Logo</b> de cada cuenta para ponerle la imagen del banco. Luego toca <b>Guardar cambios</b>.</p>
+    <div id="accs"></div>
+    <button class="btn" id="addAcc" style="color:var(--g2)">＋ Agregar cuenta</button>
+    <div class="f2" style="margin-top:20px">
+      <div class="box span2"><div class="row between" style="margin-bottom:10px"><span>📸 Galería de fotos del premio <span class="small muted">(puedes elegir varias a la vez · pasan solas en la página)</span></span><label class="btn purple" style="margin:0">⬆️ Agregar fotos<input type="file" accept="image/*" multiple hidden id="upGal"></label></div><div id="galList">${galAdminList()}</div></div>
+      <div class="box"><div style="margin-bottom:8px">Foto principal del premio</div>${s.prizeImg ? `<img src="${s.prizeImg}" style="max-height:110px;border-radius:8px;display:block;margin-bottom:8px">` : ""}
+        <div class="row"><label class="btn purple" style="margin:0">⬆️ Subir<input type="file" accept="image/*" hidden id="upPrize"></label>${s.prizeImg ? `<button class="btn" id="rmPrize">Quitar</button>` : ""}</div></div>
+      <div class="box"><div style="margin-bottom:8px">Tu logo</div>${s.logo ? `<img src="${s.logo}" style="max-height:80px;display:block;margin-bottom:8px">` : ""}
+        <div class="row"><label class="btn purple" style="margin:0">⬆️ Subir<input type="file" accept="image/*" hidden id="upLogo"></label>${s.logo ? `<button class="btn" id="rmLogo">Quitar</button>` : ""}</div></div>
+    </div>
+    <button class="btn green full" id="saveCfg" style="margin-top:10px">💾 GUARDAR CAMBIOS</button>
+  </div>`;
+  const paintAccs = () => {
+    $("#accs").innerHTML = S.draftAcc.map((a, i) => `<div class="accrow">
+      <label class="lg" title="Logo del banco">${a.logo ? `<img src="${a.logo}" alt=""><span class="lgx" data-lgrm="${i}">✕</span>` : `🏦<span>Logo</span>`}<input type="file" accept="image/*" hidden data-lg="${i}"></label>
+      <input data-i="${i}" data-k="bank" placeholder="Banco" value="${esc(a.bank)}">
+      <input data-i="${i}" data-k="type" placeholder="Tipo (Ahorro)" value="${esc(a.type)}">
+      <input data-i="${i}" data-k="number" placeholder="No. cuenta" value="${esc(a.number)}">
+      <input data-i="${i}" data-k="holder" placeholder="Titular" value="${esc(a.holder)}">
+      <button class="btn red" data-rm="${i}">✕</button></div>`).join("");
+    $$("#accs input[data-k]").forEach((x) => (x.oninput = () => (S.draftAcc[x.dataset.i][x.dataset.k] = x.value)));
+    $$("[data-rm]").forEach((b) => (b.onclick = () => { S.draftAcc.splice(+b.dataset.rm, 1); paintAccs(); }));
+    $$("[data-lg]").forEach((inp) => (inp.onchange = async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      try { S.draftAcc[+inp.dataset.lg].logo = await compress(f, 120, 0.92, "image/png"); paintAccs(); toast("Logo listo. Toca Guardar cambios 💾"); }
+      catch (er) { console.error(er); toast("No se pudo leer la imagen", true); }
+    }));
+    $$("[data-lgrm]").forEach((x) => (x.onclick = (e) => { e.preventDefault(); e.stopPropagation(); S.draftAcc[+x.dataset.lgrm].logo = ""; paintAccs(); }));
+  };
+  paintAccs();
+  $("#addAcc").onclick = () => { S.draftAcc.push({ bank: "", type: "Ahorro", number: "", holder: "", logo: "" }); paintAccs(); };
+  const img = (id, key, max, q, type) => { const el = $(id); if (el) el.onchange = async (e) => { const f = e.target.files[0]; if (!f) return; try { await setDoc(doc(db, "settings", "main"), { [key]: await compress(f, max, q, type) }, { merge: true }); toast("Imagen guardada"); setTimeout(tabConfig, 400); } catch (er) { console.error(er); toast("Imagen muy pesada o error", true); } }; };
+  img("#upPrize", "prizeImg", 1400, 0.8); img("#upLogo", "logo", 300, 0.92, "image/png");
+  if ($("#rmPrize")) $("#rmPrize").onclick = async () => { await setDoc(doc(db, "settings", "main"), { prizeImg: "" }, { merge: true }); setTimeout(tabConfig, 400); };
+  if ($("#rmLogo")) $("#rmLogo").onclick = async () => { await setDoc(doc(db, "settings", "main"), { logo: "" }, { merge: true }); setTimeout(tabConfig, 400); };
+  $("#saveCfg").onclick = async () => {
+    const mn = Math.max(1, Number($("#fMin").value) || 1), mx = Math.max(mn, Number($("#fMax").value) || 5);
+    const data = { title: $("#fTitle").value.trim(), price: Number($("#fPrice").value) || 0, description: $("#fDesc").value.trim(), drawDate: $("#fDate").value, drawTime: $("#fTime").value, showCountdown: $("#fCd").checked, lottery: $("#fLot").value.trim(), minNumbers: mn, maxNumbers: mx, unsoldRule: $("#fRule").value.trim(), pauseMsg: $("#fPause").value.trim(), whatsapp: digits($("#fWa").value), accounts: S.draftAcc.filter((a) => a.bank && a.number) };
+    try { await setDoc(doc(db, "settings", "main"), data, { merge: true }); toast("Cambios guardados ✔"); } catch (e) { console.error(e); toast("Error guardando. Si subiste muchas imágenes, prueba logos más pequeños.", true); }
+  };
+}
+
+/* ----- sorteo y cierre ----- */
+function tabSorteo() {
+  const s = S.settings, pend = S.orders.filter((o) => o.status === "pendiente");
+  $("#tabc").innerHTML = `
+  <div class="card">
+    <h3 style="margin-top:0">🏆 Registrar número ganador</h3>
+    <p class="small muted">Escribe los 2 dígitos que salieron en ${esc(s.lottery)}. Al publicarlo se cierra la venta y el ganador aparece en la página.</p>
+    <input id="wn" maxlength="2" inputmode="numeric" placeholder="00" value="${esc(s.winningNumber)}" style="text-align:center;font-size:40px;font-weight:900;letter-spacing:8px;max-width:220px">
+    <div id="wInfo" style="margin:14px 0"></div>
+    <div class="row"><button class="btn green" id="wPub">PUBLICAR GANADOR</button>${s.winningNumber ? `<button class="btn" id="wClr">Quitar ganador</button>` : ""}</div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">🔓 Liberar números reservados</h3>
+    <p class="small muted">Libera todos los números que siguen <b>pendientes</b> (sin pago validado). Útil el día del sorteo para que no quede nada apartado sin pagar. Hay <b>${pend.length}</b> pedido(s) pendiente(s) con <b>${pend.reduce((t, o) => t + o.numbers.length, 0)}</b> número(s).</p>
+    <button class="btn red" id="relPend" ${pend.length ? "" : "disabled"}>Liberar reservados pendientes</button>
+  </div>
+  <div class="card" style="border-color:var(--r)">
+    <h3 style="margin-top:0">🔄 Terminar rifa y empezar una nueva</h3>
+    <p class="small muted">Primero se descarga automáticamente un <b>Excel</b> con todos los pedidos como respaldo. Luego se borran todos los pedidos, comprobantes y números (vendidos y reservados), y los 100 números quedan libres. La venta queda <b>pausada</b> para que configures el nuevo premio. Las fotos, cuentas y ajustes se mantienen.</p>
+    <button class="btn redf" id="reset">Terminar rifa y liberar todos los números</button>
+  </div>`;
+  const owner = (n) => S.orders.find((o) => o.status !== "rechazado" && o.numbers.includes(n));
+  const paint = () => {
+    const n = digits($("#wn").value); $("#wPub").disabled = n.length !== 2;
+    if (n.length !== 2) return ($("#wInfo").innerHTML = "");
+    const o = owner(n);
+    $("#wInfo").innerHTML = o ? `<div class="box"><span class="small muted">Dueño del número ${n}:</span><h3 style="margin:4px 0">${esc(o.name)}</h3><div class="muted">📱 ${esc(o.phone ? fmtPhone(o.phone) : "sin teléfono")}</div><div style="margin-top:6px"><span class="badge b-${o.status}">${o.status.toUpperCase()}</span></div>${o.status === "pendiente" ? `<p class="small" style="color:var(--a)">Ojo: este pago aún no está validado.</p>` : ""}</div>` : `<div class="box" style="color:var(--a)">Este número no fue vendido. Aplica tu regla: ${esc(s.unsoldRule)}</div>`;
+  };
+  $("#wn").oninput = paint; paint();
+  $("#wPub").onclick = async () => {
+    const n = digits($("#wn").value), o = owner(n);
+    const winnerName = o && o.status === "aprobado" ? `${o.name.split(" ")[0]} ${o.name.split(" ").slice(1).map((w) => w[0] + ".").join(" ")}` : "";
+    await setDoc(doc(db, "settings", "main"), { winningNumber: n, winnerName, open: false }, { merge: true });
+    toast("Ganador publicado 🏆"); setTimeout(tabSorteo, 300);
+  };
+  if ($("#wClr")) $("#wClr").onclick = async () => { await setDoc(doc(db, "settings", "main"), { winningNumber: "", winnerName: "" }, { merge: true }); toast("Ganador quitado"); setTimeout(tabSorteo, 300); };
+  $("#relPend").onclick = async () => {
+    if (!(await ask(`¿Liberar ${pend.length} pedido(s) pendiente(s)? Sus números quedarán disponibles y los pedidos pasarán a "rechazado".`))) return;
+    try { await runOps(pend.flatMap(rejectOps)); toast("Reservados liberados ✔"); setTimeout(tabSorteo, 400); } catch (e) { console.error(e); toast("Error liberando", true); }
+  };
+  $("#reset").onclick = async () => {
+    if (!(await ask("Se descargará un Excel de respaldo y luego se borrarán TODOS los pedidos, comprobantes y números. ¿Terminar la rifa?"))) return;
+    exportCSV();
+    const ops = [];
+    S.orders.forEach((o) => { ops.push((b) => b.delete(doc(db, "orders", o.id)), (b) => b.delete(doc(db, "vouchers", o.id))); if (o.phone) ops.push((b) => b.delete(doc(db, "lookup", o.phone, "items", o.id))); });
+    Object.keys(S.numbers).forEach((n) => ops.push((b) => b.delete(doc(db, "numbers", n))));
+    try {
+      await runOps(ops);
+      await setDoc(doc(db, "settings", "main"), { winningNumber: "", winnerName: "", open: false }, { merge: true });
+      toast("Rifa terminada. Configura el nuevo premio y reanuda la venta ▶️");
+      setTimeout(tabSorteo, 400);
+    } catch (e) { console.error(e); toast("Error reiniciando", true); }
+  };
+}
+
+/* ----- mi cuenta ----- */
+function tabCuenta() {
+  $("#tabc").innerHTML = `<div class="card narrow" style="margin:0">
+    <h3 style="margin-top:0">🔐 Cambiar contraseña del panel</h3>
+    <p class="small muted">Usuario: <b style="color:var(--t)">${esc(ADMIN_USER)}</b></p>
+    <label>Contraseña actual<div class="pw"><input type="password" id="pCur" autocomplete="current-password"></div></label>
+    <label>Contraseña nueva (mínimo 8 caracteres)<div class="pw"><input type="password" id="pNew" autocomplete="new-password"></div></label>
+    <label>Repetir contraseña nueva<div class="pw"><input type="password" id="pNew2" autocomplete="new-password"></div></label>
+    <label class="chk" style="font-size:14px;color:var(--t);align-items:center"><input type="checkbox" id="pShow"> Mostrar contraseñas</label>
+    <div id="pMsg"></div>
+    <button class="btn green full" id="pGo">CAMBIAR CONTRASEÑA</button>
+  </div>`;
+  $("#pShow").onchange = (e) => ["#pCur", "#pNew", "#pNew2"].forEach((id) => ($(id).type = e.target.checked ? "text" : "password"));
+  $("#pGo").onclick = async () => {
+    const cur = $("#pCur").value, n1 = $("#pNew").value, n2 = $("#pNew2").value, msg = $("#pMsg");
+    if (!cur) return (msg.innerHTML = `<div class="err">Escribe tu contraseña actual.</div>`);
+    if (n1.length < 8) return (msg.innerHTML = `<div class="err">La nueva contraseña debe tener mínimo 8 caracteres.</div>`);
+    if (n1 !== n2) return (msg.innerHTML = `<div class="err">Las contraseñas nuevas no coinciden.</div>`);
+    $("#pGo").disabled = true;
+    try {
+      await reauthenticateWithCredential(auth.currentUser, EmailAuthProvider.credential(auth.currentUser.email, cur));
+      await updatePassword(auth.currentUser, n1);
+      msg.innerHTML = `<div class="okmsg">✔ Contraseña cambiada. Úsala la próxima vez que entres.</div>`;
+      ["#pCur", "#pNew", "#pNew2"].forEach((id) => ($(id).value = ""));
+    } catch (e) {
+      console.error(e);
+      msg.innerHTML = `<div class="err">${["auth/wrong-password", "auth/invalid-credential", "auth/invalid-login-credentials"].includes(e.code) ? "La contraseña actual no es correcta." : e.code === "auth/too-many-requests" ? "Demasiados intentos. Espera unos minutos." : "No se pudo cambiar la contraseña."}</div>`;
+    }
+    $("#pGo").disabled = false;
+  };
+}
+
+function exportCSV() {
+  const rows = [["Fecha", "Nombre", "WhatsApp", "Números", "Cantidad", "Monto", "Cuenta", "Estado", "Tipo"]];
+  S.orders.forEach((o) => rows.push([fmtDT(o.createdAt), o.name, o.phone ? fmtPhone(o.phone) : "", o.numbers.join(" "), o.numbers.length, o.total, o.account, o.status, o.manual ? "Manual" : "Web"]));
+  const csv = "\uFEFF" + rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(";")).join("\r\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = `rifa-${(S.settings.title || "dk").replace(/\W+/g, "-")}-${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+}
+</script>
+</body>
+</html>
