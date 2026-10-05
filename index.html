@@ -453,7 +453,16 @@ function tick() {
   const d = new Date(`${s.drawDate}T${s.drawTime || "00:00"}:00`).getTime() - Date.now();
   if (d <= 0) { tl.innerHTML = "🎉 ¡Llegó el día del sorteo!"; el.style.display = "none"; return; }
   const days = Math.floor(d / 864e5);
-  tl.innerHTML = days >= 1 ? `⏳ Faltan <b>${days}</b> día${days === 1 ? "" : "s"} para el sorteo` : `⏳ ¡El sorteo es <b>HOY</b>!`;
+
+  // Días de calendario (cambia a las 12:00 AM)
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+  const diaSorteo = new Date(`${s.drawDate}T00:00:00`);
+  const diasCal = Math.round((diaSorteo - hoy) / 864e5);
+
+  tl.innerHTML = diasCal >= 2 ? `⏳ Faltan <b>${diasCal}</b> días para el sorteo`
+    : diasCal === 1 ? `⏳ ¡El sorteo es <b>MAÑANA</b>!`
+    : `⏳ ¡El sorteo es <b>HOY</b>!`;
+
   const v = [[days, "Días"], [Math.floor(d / 36e5) % 24, "Horas"], [Math.floor(d / 6e4) % 60, "Min"], [Math.floor(d / 1e3) % 60, "Seg"]];
   el.style.display = ""; el.innerHTML = v.map(([n, l]) => `<div><b>${String(n).padStart(2, "0")}</b><span>${l}</span></div>`).join("");
 }
